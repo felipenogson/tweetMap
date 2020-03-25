@@ -1,6 +1,7 @@
 import os
 import json
 import tweepy
+import redis
 from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
@@ -17,6 +18,9 @@ CONSUMER_KEY = os.getenv('CONSUMER_KEY')
 CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 ACCESS_SECRET = os.getenv('ACCESS_SECRET')
+
+# Init redis
+r = redis.Redis()
 
 # Twitter Auth
 auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -61,6 +65,8 @@ class MyListener(StreamListener):
         try:
             if 'place' in data and data['place']:  # Only tweets with location info
                 feature = parser(data)
+                r.lpush('tweetList', json.dumps(feature))
+                r.ltrim('tweetList',0,30)
                 socketio.emit('addMarker', feature, json=True)  # Send the tweet to all connected clients
                 return True
         except BaseException as e:
