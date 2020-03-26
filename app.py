@@ -66,8 +66,8 @@ class MyListener(StreamListener):
             if 'place' in data and data['place']:  # Only tweets with location info
                 feature = parser(data)
                 r.lpush('tweetList', json.dumps(feature))
-                r.ltrim('tweetList',0,30)
-                # socketio.emit('addMarker', feature, json=True)  # Send the tweet to all connected clients
+                r.ltrim('tweetList',0,29)
+                socketio.emit('addMarker', feature, json=True)  # Send the tweet to all connected clients
                 return True
         except BaseException as e:
             print("Error on_data: %s" % str(e))
@@ -84,7 +84,7 @@ def start_filter(tags):
 @socketio.on('my event')
 def primer_encuentro(msg):
     print('recived msg:', msg) 
-    tweets = r.lrange('tweetList', 0, 5)
+    tweets = r.lrange('tweetList', 0, -1)
     tweets = [json.loads(x) for x in tweets]
     emit('tweets', tweets, json=True)
 
