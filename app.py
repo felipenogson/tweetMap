@@ -10,7 +10,7 @@ from flask import Flask, render_template
 from threading import Thread
 from shapely.geometry import mapping, shape
 from flask_socketio import SocketIO
-from flask_socketio import emit
+from flask_socketio import emit, send
 
 load_dotenv()
 
@@ -67,7 +67,7 @@ class MyListener(StreamListener):
                 feature = parser(data)
                 r.lpush('tweetList', json.dumps(feature))
                 r.ltrim('tweetList',0,30)
-                socketio.emit('addMarker', feature, json=True)  # Send the tweet to all connected clients
+                # socketio.emit('addMarker', feature, json=True)  # Send the tweet to all connected clients
                 return True
         except BaseException as e:
             print("Error on_data: %s" % str(e))
@@ -80,6 +80,13 @@ class MyListener(StreamListener):
 def start_filter(tags):
     twitter_stream = Stream(auth, MyListener())  # Create object for Twitter Streaming API
     twitter_stream.filter(track=tags) # Start getting all the tweets with the given tags
+
+@socketio.on('my event')
+def primer_encuentro(msg):
+    print('recived msg:', msg) 
+    tweets = r.lrange('tweetList', 0, 5)
+    tweets = [json.loads(x) for x in tweets]
+    emit('tweets', tweets, json=True)
 
 @app.route('/')
 def home():
