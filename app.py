@@ -90,7 +90,7 @@ def primer_encuentro(msg):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('template.html')
 
 
 if __name__ == '__main__':
