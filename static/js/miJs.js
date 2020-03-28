@@ -59,8 +59,8 @@ socket.on('addMarker', tweet => {
     .setIcon(greenIcon)
   );
 
-//   document.querySelector('#lastTweet').innerHTML =
-//     `<p>${tweet.properties.text}</p>
-//               <p><b>${tweet.properties.user}</b></p>
-//               <p><i>${tweet.properties.created_at}</i></p>`;
+  document.querySelector('#lastTweet').innerHTML =
+    `<p>${tweet.properties.text}</p>
+              <p><b>${tweet.properties.user}</b></p>
+              <p><i>${tweet.properties.created_at}</i></p>`;
 });
