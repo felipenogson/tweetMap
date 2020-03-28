@@ -11,6 +11,7 @@ from threading import Thread
 from shapely.geometry import mapping, shape
 from flask_socketio import SocketIO
 from flask_socketio import emit, send
+from covidAPI import getCountryData193 as getCountryData
 
 load_dotenv()
 
@@ -90,7 +91,13 @@ def primer_encuentro(msg):
 
 @app.route('/')
 def home():
-    return render_template('template.html')
+
+    data = getCountryData('All')['response'][0] # Geting the data from te API
+    cases = data['cases']
+    deaths = data['deaths']['total']
+    day = data['day']
+
+    return render_template('template.html', cases=cases, deaths=deaths, day=day)
 
 
 if __name__ == '__main__':

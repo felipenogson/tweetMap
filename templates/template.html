@@ -9,11 +9,13 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Dashboard</title>
+  <title>CoronaVirus - Information</title>
     <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/5.13.0/css/font-awesome.min.css"> -->
+  <script src="https://kit.fontawesome.com/2c8f5ef79f.js" crossorigin="anonymous"></script>
+
 
   <!-- This is my css style -->
   <link rel="stylesheet" href="{{ url_for('static', filename='mistyle.css') }}">
@@ -62,6 +64,9 @@
           </button>
 
           <!-- Topbar Search -->
+          <div>
+            <i class="fas fa-shield-virus" aria-hidden="true"></i> Map for information
+          </div>
           <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -184,8 +189,8 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">CoronaVirus</h1>
-            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+            <h1 class="mb-0 text-gray-800">Global</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-calendar fa-sm text-white-70"></i> {{ day }}</a>
           </div>
 
           <!-- Content Row -->
@@ -198,10 +203,10 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total cases:</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">140,000</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ cases.total }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fa fa-notes-medical fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -214,11 +219,11 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Confirmed:</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">115,000</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Active:</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ cases.active }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                      <i class="fas fa-head-side-virus fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -231,20 +236,15 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Recovered</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Recovered:</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50</div>
-                        </div>
-                        <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ cases.recovered }}</div>
                         </div>
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                      <i class="fas fa-heart fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -258,10 +258,10 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Deaths</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ deaths }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      <i class="fas fa-book-dead fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -278,7 +278,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-twitter"></i> What twitter are saying:</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
