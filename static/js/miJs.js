@@ -1,13 +1,16 @@
 // Map Init
 var map = L.map('mapid').setView([30, -101], 3);
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  maxZoom: 18,
-  id: 'mapbox/streets-v11',
-  tileSize: 512,
-  zoomOffset: -1,
-  accessToken: 'pk.eyJ1IjoiZmVsaXBvbiIsImEiOiJjazgzeTc3c2IxaWFyM2twYXo1dnh3dXlsIn0.6Nt3yDdsPUkQi9FPycXSxg'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+// L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+//   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//   maxZoom: 18,
+//   id: 'mapbox/streets-v11',
+//   tileSize: 512,
+//   zoomOffset: -1,
+//   accessToken: 'pk.eyJ1IjoiZmVsaXBvbiIsImEiOiJjazgzeTc3c2IxaWFyM2twYXo1dnh3dXlsIn0.6Nt3yDdsPUkQi9FPycXSxg'
+// }).addTo(map);
 
 // Map marker classes
 var blueIcon = new L.Icon({
@@ -48,8 +51,11 @@ socket.on('tweets', function (tweets) {
 
   socket.on('country', (e) => { 
     console.log(e)
-    test = document.querySelector("#country");
-    test.innerHTML = e['countryName'];
+    document.querySelector("#country").innerHTML = e['countryName'];
+    document.querySelector("#total-cases").innerHTML = e.covid19.confirmed + e.covid19.recovered + e.covid19.deaths; 
+    document.querySelector("#active-cases").innerHTML = e.covid19.confirmed - e.covid19.recovered - e.covid19.deaths; 
+    document.querySelector("#recovered-cases").innerHTML = e.covid19.recovered;
+    document.querySelector("#deaths-cases").innerHTML = e.covid19.deaths;
   });
 
 });
