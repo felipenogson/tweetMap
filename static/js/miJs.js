@@ -64,3 +64,6 @@ socket.on('addMarker', tweet => {
               <p><b>${tweet.properties.user}</b></p>
               <p><i>${tweet.properties.created_at}</i></p>`;
 });
+
+// News feed generator or receiver
+socket.on('addArticle', article => console.log(article));

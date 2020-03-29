@@ -12,6 +12,7 @@ from shapely.geometry import mapping, shape
 from flask_socketio import SocketIO
 from flask_socketio import emit, send
 from covidAPI import getCountryData193 as getCountryData
+from time import sleep
 
 load_dotenv()
 
@@ -82,6 +83,13 @@ def start_filter(tags):
     twitter_stream = Stream(auth, MyListener())  # Create object for Twitter Streaming API
     twitter_stream.filter(track=tags) # Start getting all the tweets with the given tags
 
+def start_news_feeder():
+    while True:
+        article = r.srandmember('articles').decode()
+        emit('addArticle', article, json=True)
+        sleep(30)
+
+
 @socketio.on('my event')
 def primer_encuentro(msg):
     print('recived msg:', msg) 
@@ -97,7 +105,10 @@ def home():
     deaths = data['deaths']['total']
     day = data['day']
 
-    return render_template('template.html', cases=cases, deaths=deaths, day=day)
+    article = json.loads(r.srandmember('articles'))
+    # socketio.emit("addArticle", article, json=True)
+
+    return render_template('template.html', cases=cases, deaths=deaths, day=day, article=article)
 
 
 if __name__ == '__main__':
