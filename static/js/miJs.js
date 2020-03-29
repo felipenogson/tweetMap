@@ -52,7 +52,7 @@ socket.on('tweets', function (tweets) {
   socket.on('country', (e) => { 
     console.log(e)
     document.querySelector("#country").innerHTML = e['countryName'];
-    document.querySelector("#total-cases").innerHTML = e.covid19.confirmed + e.covid19.recovered + e.covid19.deaths; 
+    document.querySelector("#total-cases").innerHTML = e.covid19.confirmed; 
     document.querySelector("#active-cases").innerHTML = e.covid19.confirmed - e.covid19.recovered - e.covid19.deaths; 
     document.querySelector("#recovered-cases").innerHTML = e.covid19.recovered;
     document.querySelector("#deaths-cases").innerHTML = e.covid19.deaths;
