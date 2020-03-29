@@ -12,6 +12,7 @@ from shapely.geometry import mapping, shape
 from flask_socketio import SocketIO
 from flask_socketio import emit, send
 from covidAPI import getCountryData193 as getCountryData
+from reverseGeo import reverseGeocode
 from time import sleep
 
 load_dotenv()
@@ -96,6 +97,12 @@ def primer_encuentro(msg):
     tweets = r.lrange('tweetList', 0, -1)
     tweets = [json.loads(x) for x in tweets]
     emit('tweets', tweets, json=True)
+
+@socketio.on('get_country')
+def return_country(data):
+    data = data['data'][0]
+    country = reverseGeocode(data['lat'], data['lng'])
+    emit('country', country, json=True)
 
 @app.route('/')
 def home():

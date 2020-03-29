@@ -39,6 +39,19 @@ def getCountryCodeData(code):
     response = requests.request("GET", url, headers=headers, params=querystring)
     return response.json()
 
+def getCountryDataByCode(code):
+    url = "https://covid-19-data.p.rapidapi.com/country/code"
+
+    querystring = {"format":"undefined","code":code}
+
+    headers = {
+        'x-rapidapi-host': "covid-19-data.p.rapidapi.com",
+        'x-rapidapi-key': x_rapidapi_key
+        }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    return response.json()
 
 def getGlobalData193():
 

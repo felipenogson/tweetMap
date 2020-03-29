@@ -8,6 +8,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   zoomOffset: -1,
   accessToken: 'pk.eyJ1IjoiZmVsaXBvbiIsImEiOiJjazgzeTc3c2IxaWFyM2twYXo1dnh3dXlsIn0.6Nt3yDdsPUkQi9FPycXSxg'
 }).addTo(map);
+
 // Map marker classes
 var blueIcon = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
@@ -45,6 +46,12 @@ socket.on('tweets', function (tweets) {
         )
   });
 
+  socket.on('country', (e) => { 
+    console.log(e)
+    test = document.querySelector("#country");
+    test.innerHTML = e['countryName'];
+  });
+
 });
 socket.on('addMarker', tweet => {
   // L.marker([tweet.geometry.coordinates[1],tweet.geometry.coordinates[0]]).addTo(map).bindPopup(`<a href=${tweet.properties.url} target="New_tab">${tweet.properties.text}</a> <b>${tweet.properties.user}` )
@@ -80,3 +87,11 @@ socket.on('addArticle', article => {
                 </div>
                 `
 });
+
+function onMapClick(e){
+  socket.emit("get_country", {
+    data : [e.latlng]
+  });
+}
+
+map.on('click', onMapClick);
