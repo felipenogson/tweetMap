@@ -16,11 +16,11 @@ reddit_client = praw.Reddit(client_id=client, client_secret=secret, user_agent=a
 reddit_client.read_only
 
 
-def download_articles():
-    for submission in reddit_client.subreddit('coronavirus').hot(limit=20):
+def download_articles(subreddit, limit=20):
+    for submission in reddit_client.subreddit(subreddit).hot(limit=limit):
         if submission.stickied == True:
             continue
-        article = {"title":submission.title, "thumbnail": submission.thumbnail, "url":submission.url}
+        article = {"title":submission.title, "thumbnail": submission.thumbnail, "url":submission.url, "subreddit" : subreddit}
         r.sadd('articles', json.dumps(article))
 
 def get_random_article():
