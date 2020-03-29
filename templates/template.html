@@ -304,7 +304,7 @@
 
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id="articleData">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">News and information</h6>
@@ -322,8 +322,8 @@
                   <!-- </div> -->
                 </div>
                 <!-- Card Body -->
-                <img src="{{ article.thumbnail }}" alt="article thumbnail" class="card-img-top" id="article-thumbnail">
-                <div class="card-body">
+                <img src="{{ article.thumbnail }}" alt="article thumbnail" class="card-img-top rounded p-2" id="article-thumbnail">
+                <div class="card-body" id="articleTitle">
                   <h5 id="article-title">{{ article.title }}</h5>
                   <a href="{{article.url}}" id="article-url">{{ article.url }}</a>
                 </div>
@@ -525,20 +525,20 @@
 
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
   <!-- Custom script by felipon -->
   <script src="{{ url_for('static', filename='js/miJs.js')}}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <!-- <script src="js/sb-admin-2.min.js"></script> -->
 
   <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  <!-- <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

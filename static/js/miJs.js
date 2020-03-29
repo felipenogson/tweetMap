@@ -66,4 +66,17 @@ socket.on('addMarker', tweet => {
 });
 
 // News feed generator or receiver
-socket.on('addArticle', article => console.log(article));
+socket.on('addArticle', article => {
+ article = JSON.parse(article);
+ var articleData = document.querySelector('#articleData');
+ articleData.innerHTML = `
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">News and information</h6>
+                </div>
+                <img src="${article.thumbnail }" alt="article thumbnail" class="card-img-top rounded p-2" id="article-thumbnail">
+                <div class="card-body" id="article">
+                  <h5 id="article-title">${article.title}</h5>
+                  <a href="${article.url}" id="article-url">${ article.url }</a>
+                </div>
+                `
+});

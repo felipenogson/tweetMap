@@ -86,7 +86,7 @@ def start_filter(tags):
 def start_news_feeder():
     while True:
         article = r.srandmember('articles').decode()
-        emit('addArticle', article, json=True)
+        socketio.emit('addArticle', article, json=True)
         sleep(30)
 
 
@@ -106,7 +106,6 @@ def home():
     day = data['day']
 
     article = json.loads(r.srandmember('articles'))
-    # socketio.emit("addArticle", article, json=True)
 
     return render_template('template.html', cases=cases, deaths=deaths, day=day, article=article)
 
@@ -115,5 +114,6 @@ if __name__ == '__main__':
     tags = ["#coronavirus"]
     # Create and start thread for get the tweets
     Thread(target=start_filter, args=(tags,)).start()
+    Thread(target=start_news_feeder).start()
     # Start the server
     socketio.run(app, debug=True, host='0.0.0.0')
